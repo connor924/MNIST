@@ -1,5 +1,5 @@
 # MNIST
 
-Current Version is basic CNN. I intend to improve this by adding elements from the dropconnect paper, "Regularization of Neural Networks using DropConnect" https://cs.nyu.edu/~wanli/dropc/dropc.pdf
+Current Version is basic CNN from a tutorial (link in python code).. I will be modifying this to improve performance:
 
-07/19/17 - Version 1.0 - 0.9919 Accuracy on Testing Set
+7/19/17 - Accuracy on Testing Set is 0.9919
