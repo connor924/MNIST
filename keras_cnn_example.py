@@ -74,4 +74,4 @@ model.fit(X_train, Y_train, batch_size=32, nb_epoch=10, verbose=1)
 
 #### Evaluate testing data
 score = model.evaluate(X_test, Y_test, verbose=0)
-aac
+print("Testing Set Evaluation \n Loss: %s Acc: %s" %(score[0], score[1]))
