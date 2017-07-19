@@ -16,10 +16,23 @@ from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.datasets import mnist
 from matplotlib import pyplot as plt
+import pandas
 
+####Loading kaggle train/test data
+train = pandas.read_csv("train.csv").values
+Y_train=np_utils.to_categorical(train[:,0].astype('int32'),10)
+X_train=train[:,1:].astype('float32')
+X_train /= 255
+X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
 
-#load mnist data from keras datasets
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+test = pandas.read_csv("test.csv").values
+X_test=test.astype('float32')
+X_test /= 255
+X_test = X_test.reshape(X_test.shape[0], 28, 28,1)
+
+'''
+####load mnist data from keras datasets
+#(X_train, y_train), (X_test, y_test) = mnist.load_data()
 
 ####pre-process input data
 
@@ -38,7 +51,7 @@ X_test /= 255
 # this requires some pre-processing so that the class labels are showing which of the 10 distinct class labels it is
 Y_train = np_utils.to_categorical(y_train, 10)
 Y_test = np_utils.to_categorical(y_test, 10)
-
+'''
 
 ###define model architecture
 #declare sequential model
@@ -73,5 +86,8 @@ model.fit(X_train, Y_train, batch_size=32, nb_epoch=10, verbose=1)
 
 
 #### Evaluate testing data
-score = model.evaluate(X_test, Y_test, verbose=0)
-print("Testing Set Evaluation \n Loss: %s Acc: %s" %(score[0], score[1]))
+Y_test = model.predict_classes(X_test, verbose=1)
+
+
+####Kaggle Competition Submission 
+pd.DataFrame({"ImageId": list(range(1,len(Y_test)+1)), "Label": Y_test}).to_csv('submission.csv', index=False, header=True)
